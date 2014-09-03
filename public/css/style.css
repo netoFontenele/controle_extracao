@@ -1,0 +1,55 @@
+body{
+	background: url('../img/bg-body.png') repeat;
+	font-family: 'Cabin', sans-serif;
+}
+input,button{
+	font-family: 'Cabin', sans-serif;
+}
+.text-small{
+	font-size: .8em !important;
+}
+.top-bar {
+	background: #C9460C;
+}
+.top-bar-section li:not(.has-form) a:not(.button) {
+	padding: 0 15px;
+	line-height: 45px;
+	background: #C9460C;
+}
+.user-bar{
+	background: #ccc;
+	padding: 15px;
+	border-radius: 5px;
+	margin-top: -5px;
+	z-index: -1
+}
+.forms{
+	border-radius: 10px;
+	background: #e2e2e2;
+	padding: 15px;
+}
+.header-info{
+	padding-top: 3em;
+	padding-bottom: 3em;
+}
+.bg{
+	background: #fff;
+	margin:3em 0;
+	padding: 2em;
+	border-radius:.3em
+}
+h1,h2,h3,h4,h5,h6{
+	font-family: 'Noto Sans', sans-serif;
+}
+.inf-page{
+	width: 100%;
+	height: 2em;
+	line-height: 2em;
+	padding-left: 5px;
+	color: #C9460C;
+	border-radius: .1em;
+	/*text-shadow: 4px 3px 0px #ccc, 8px 6px 0px rgba(0, 0, 0, 0.15);*/
+}
+h3{
+
+}
