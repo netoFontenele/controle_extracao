@@ -75,7 +75,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="large-3 columns">
+			<div class="large-4 columns">
 				<label>Cidade<small class="right" data-tooltip aria-haspopup="true" class="has-tip" title="Escolha cidade">Requerido</small>
 					<?php 
 					$options = array ('' => 'Escolha a cidade');
@@ -86,55 +86,67 @@
 				</label>
 				<small class="error">Valor escolhido inválido ou incorreto</small>
 			</div>
-			<div class="large-3 columns">
+			<div class="large-4 columns">
 				<label>Bairro<small class="right" data-tooltip aria-haspopup="true" class="has-tip" title="Inserir no Formato Rua: ou AV.">Requerido</small>
 					<input type="text" required placeholder="Digite o bairro" />
 				</label>
 				<small class="error">Valor inserido inválido ou incorreto</small>
 			</div>
-			<div class="large-3 columns">
+			<div class="large-4 columns">
 				<label>CEP: <small class="right" data-tooltip aria-haspopup="true" class="has-tip" title="Por favor inserir apenas números, o nosso sistema cuidará de inserir o resto ;)">Apenas Números / Requerido</small>
 					<input type="text" required placeholder="Digite o Cep" data-mask="00000-000" />
 				</label>
 				<small class="error">Valor inserido inválido ou incorreto</small>
 			</div>
-			<div class="large-3 columns"> <br>
-				<button type="button" data-reveal-id="myModal" class="button small expand get-localizacao">Mostrar no mapa <i class="fa fa-map-marker"></i>
-				</button> 
-				<!-- Modal com mapa -->
-				<div id="myModal" class="reveal-modal" data-reveal>
-					<div class="row">
-						<div class="large-12 columns">
-							<h3>Mostre o endereço do vendedor no mapa</h3>
-							<a class="close-reveal-modal">&#215;</a>
-						</div>
-					</div>
-					<div class="row">
-						<div class="large-12 columns">
-							<div class="row collapse">
-								<div class="small-10 columns">
-									<input type="text" id="txtEndereco" name="txtEndereco" placeholder="Digite o endereço" />
-								</div>
-								<div class="small-2 columns">
-									<input class="button postfix" type="button" id="btnEndereco" name="btnEndereco" value="Mostrar no mapa" />
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="row">
-						<div class="large-12 columns">
-							<div id="mapa" style="height: 500px">
-							</div>
-							<input type="hidden" id="txtLatitude" name="txtLatitude" />
-							<input type="hidden" id="txtLongitude" name="txtLongitude" />
-							<a href="#" class="button" id="action">OK</a>
-						</div>
-					</div>
+			<!-- Mapa -->
+			<div class="row">
+				<div class="large-12 columns">
+					<h3>Mostre o endereço do vendedor no mapa</h3>
 				</div>
 			</div>
-			<input type="submit" value="vai" class="button">
-		</form>
-	</div>
+			<div class="row">
+				<div class="large-12 columns">
+					<div class="row">
+						<div class="small-10 columns">
+							<input type="text" id="txtEndereco" name="txtEndereco" placeholder="Pesquisar o endereço" />
+						</div>
+						<div class="small-2 columns">
+							<input class="button postfix" type="button" id="btnEndereco" name="btnEndereco" value="Mostrar no mapa" />
+						</div>
+					</div>
+					<div id="mapa" style="height:350px"></div>
+				</div>
+				<div class="large-12 columns">
+					<input type="hidden" id="txtLatitude" name="txtLatitude" />
+					<input type="hidden" id="txtLongitude" name="txtLongitude" />
+				</div>
+			</div> <br>
+			<h3>Referencias</h3>
+			<div class="row">
+				<div class="large-5 columns">
+					<label>Nome: <small class="right" data-tooltip aria-haspopup="true" class="has-tip" title="Por favor inserir apenas números, o nosso sistema cuidará de inserir o resto ;)">Apenas Números / Requerido</small>
+						<input type="text" required placeholder="Digite nome" />
+					</label>
+					<small class="error">Valor inserido inválido ou incorreto</small>
+				</div>
+				<div class="large-3 columns">
+					<label>Parentesco: <small class="right" data-tooltip aria-haspopup="true" class="has-tip" title="Por favor inserir apenas números, o nosso sistema cuidará de inserir o resto ;)">Apenas Números / Requerido</small>
+						<input type="text" required placeholder="Digite nome" />
+					</label>
+					<small class="error">Valor inserido inválido ou incorreto</small>
+				</div>
+				<div class="large-4 columns">
+					<label>Contato: <small class="right" data-tooltip aria-haspopup="true" class="has-tip" title="Por favor inserir apenas números, o nosso sistema cuidará de inserir o resto ;)">Apenas Números / Requerido</small>
+						<input type="text" required placeholder="Digite nome" />
+					</label>
+					<small class="error">Valor inserido inválido ou incorreto</small>
+				</div>
+			</div>
+		</div>
+		<input type="submit" value="vai" class="button">
+	</form>
+</div>
+<div id="mapa" class="" style="height: 500px;width:890px"></div>
 </div>
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyADNrhQpCRDfXpkhXabTP4f3FPRgLaRBTY&amp;sensor=false"></script>
 <?php echo load_js('js_vendedor.js') ?>
