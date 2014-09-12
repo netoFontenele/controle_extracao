@@ -2,9 +2,9 @@ var geocoder;
 var map;
 var marker;
 function initialize() {
-	var latlng = new google.maps.LatLng(-18.8800397, -47.05878999999999);
+	var latlng = new google.maps.LatLng(-4.139671, -38.218561);
 	var options = {
-		zoom: 5,
+		zoom: 8,
 		center: latlng,
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
@@ -19,14 +19,14 @@ function initialize() {
 $(document).ready(function () {
 	initialize();
 	function carregarNoMapa(endereco) {
-		geocoder.geocode({ 'address': endereco }, function (results, status) {
+		geocoder.geocode({ 'address': endereco + ', Brasil', 'region': 'BR'  }, function (results, status) {
 			if (status == google.maps.GeocoderStatus.OK) {
 				if (results[0]) {
 					var latitude = results[0].geometry.location.lat();
 					var longitude = results[0].geometry.location.lng();
-					$('#txtEndereco').val(results[0].formatted_address);
-					$('#txtLatitude').val(latitude);
-					$('#txtLongitude').val(longitude);
+					$('#endereco').val(results[0].formatted_address);
+					$('#latitude').val(latitude);
+					$('#longitude').val(longitude);
 					var location = new google.maps.LatLng(latitude, longitude);
 					marker.setPosition(location);
 					map.setCenter(location);
@@ -37,9 +37,9 @@ $(document).ready(function () {
 	}
 	$("#btnEndereco").click(function() {
 		if($(this).val() != "")
-			carregarNoMapa($("#txtEndereco").val());
+			carregarNoMapa($("endereco").val());
 	})
-	$("#txtEndereco").blur(function() {
+	$("#endereco").blur(function() {
 		if($(this).val() != "")
 			carregarNoMapa($(this).val());
 	})
@@ -47,16 +47,16 @@ $(document).ready(function () {
 		geocoder.geocode({ 'latLng': marker.getPosition() }, function (results, status) {
 			if (status == google.maps.GeocoderStatus.OK) {
 				if (results[0]) {
-					$('#txtEndereco').val(results[0].formatted_address);
-					$('#txtLatitude').val(marker.getPosition().lat());
-					$('#txtLongitude').val(marker.getPosition().lng());
+					$('#endereco').val(results[0].formatted_address);
+					$('#latitude').val(marker.getPosition().lat());
+					$('#longitude').val(marker.getPosition().lng());
 				}
 			}
 		});
 	});
-	$("#txtEndereco").autocomplete({
+	$("#endereco").autocomplete({
 		source: function (request, response) {
-			geocoder.geocode({ 'address': request.term }, function (results, status) {
+			geocoder.geocode({ 'address': request.term + ', Brasil', 'region': 'BR' }, function (results, status) {
 				response($.map(results, function (item) {
 					return {
 						label: item.formatted_address,
@@ -68,18 +68,22 @@ $(document).ready(function () {
 			})
 		},
 		select: function (event, ui) {
-			$("#txtLatitude").val(ui.item.latitude);
-			$("#txtLongitude").val(ui.item.longitude);
+			$("#latitude").val(ui.item.latitude);
+			$("#longitude").val(ui.item.longitude);
 			var location = new google.maps.LatLng(ui.item.latitude, ui.item.longitude);
 			marker.setPosition(location);
 			map.setCenter(location);
 			map.setZoom(16);
 		}
 	});
-	$("#action").click(function(){
+	/*$("#action").click(function(){
 		var endereco = $("#txtEndereco").val();
 		var latitude = $("#txtLatitude").val();
 		var longitude = $("#txtLongitude").val();
 		alert("Endereço: " + endereco + "\nLatitude: " + latitude + "\nLongitude: " + longitude);
+	});*/
+	var mostrar = $(".get-localizacao");
+	mostrar.click(function(){
+		$('#mapa').toggleClass('hide');
 	});
 });

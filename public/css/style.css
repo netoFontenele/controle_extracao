@@ -7,6 +7,7 @@ input,button{
 }
 .text-small{
 	font-size: .8em !important;
+	line-height: 1.3em !important;
 }
 .top-bar {
 	background: #C9460C;
