@@ -133,9 +133,54 @@ class Vendedores extends CI_Controller {
         );
         $this->form_validation->set_rules($regras);
         if ($this->form_validation->run()) {
+            extract($this->input->post());
             echo '<pre>';
             var_dump($this->input->post());
             echo '</pre>';
+            //dados de endereço
+            $sql_endereco = array(
+                'endereco' => $endereco,
+                'numero' => $numero,
+                'cidadeid' => $cidade,
+                'cep' => $cep,
+                'bairro' => $bairro,
+                'endereco_google' => $endereco_mapa,
+                'latitude' => $latitude,
+                'longitude' => $longitude
+            );
+            //dados pessoais
+            $sql_pessoa_fisica = array(
+                'nome' => $nome,
+                'sexo' => $sexo,
+                'CPF' => $cpf,
+                'rg' => $rg,
+                'dataNascimento' => converterUS($nascimento),
+                'apelido' => $apelido,
+                'telefone' => $telefone
+            );
+            //Dados do ambulante
+            $sql_vendedor_ambulante = array(
+                'RegionalID' => $this->session->userdata('regionalID'),
+                'timestamp' => time(),
+            );
+            $sql_referencias = array(
+               array(
+                    'nome' => $referencia1,
+                    'parentesco' => $parentesco1,
+                    'contato' => $contato1,
+                    'VendedorAmbulanteID' => ''
+                    ),
+                array(
+                    'nome' => $referencia2,
+                    'parentesco' => $parentesco2,
+                    'contato' => $contato2,
+                    'VendedorAmbulanteID' => ''
+                    )
+                );
+            echo '<pre>';
+            echo var_dump($sql_referencias);
+            echo '</pre>';
+            $this->vendedores->insert($sql_endereco,$sql_pessoa_fisica,$sql_vendedor_ambulante,$sql_referencias);
         } else {
             $this->index();
         }

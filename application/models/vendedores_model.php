@@ -6,6 +6,23 @@ class Vendedores_model extends CI_Model {
 	{
 		return $this->db->get('cidade');
 	}
+        public function insert($sql_endereco,$sql_pessoa_fisica,$sql_vendedor_ambulante,$sql_referencias) {
+            
+            $this->db->insert('endereco',$sql_endereco);
+            
+            $sql_pessoa_fisica['EnderecoID'] = $this->db->insert_id();
+            
+            $this->db->insert('pessoa_fisica',$sql_pessoa_fisica);
+            
+            $sql_vendedor_ambulante['PessoaFisicaID'] = $this->db->insert_id();
+            
+            $this->db->insert('vendedor_ambulante',$sql_vendedor_ambulante);
+            
+            $sql_referencias['VendedorAmbulanteID'] = $this->db->insert_id();
+            
+            $this->db->insert_batch('referencias_pessoais', $sql_referencias); 
+            
+        }
 }
 
 /* End of file vendedores_model.php */

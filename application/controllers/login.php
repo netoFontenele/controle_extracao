@@ -116,9 +116,9 @@ class Login extends CI_Controller
                 'usuarioID' => $get_profile_user->usuarioID ,
                 'avatar' => $get_profile_user->avatar ,
                 'last_login' => $get_profile_user->ultimoAcesso ,
-                'praca' => $get_profile_user->praca ,
                 'PerfilID' => $get_profile_user->PerfilID ,
                 'regional' => $get_profile_user->Regional ,
+                'regionalID' => $get_profile_user->regionalID ,
                 'is_logged_in' => 1
         );
         $this->session->set_userdata($create_profile_user);

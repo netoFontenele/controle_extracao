@@ -125,6 +125,7 @@ class Extracao extends CI_Controller {
 			$extracao_ativa = $this->set_dados_extracao_ativa();
 			$dados_extracao_ativa = array(
 				'extracao' => $extracao_ativa[0]->extracao,
+                                //'extracaoID' => $extracao_ativa[0]->ExtracaoID,
 				'data' => $extracao_ativa[0]->data);
 			$this->session->set_userdata('extracao', $dados_extracao_ativa);
 

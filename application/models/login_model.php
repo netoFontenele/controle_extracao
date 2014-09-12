@@ -21,7 +21,7 @@ class Login_model extends CI_Model {
      */
     public function get_user($where)
     {
-    	$this->db->select('u.usuarioID,p.PerfilID,u.usuario,u.avatar,u.email,u.last_login as ultimoAcesso,r.Regional,p.descricao as nivelPrivilegio');
+    	$this->db->select('u.usuarioID,p.PerfilID,u.usuario,u.avatar,u.email,u.last_login as ultimoAcesso,r.Regional,p.descricao as nivelPrivilegio,r.regionalID');
     	$this->db->from('usuario u');
     	$this->db->join('perfil p', 'p.PerfilID = u.PerfilID', 'inner');
     	$this->db->join('usuario_regional us', 'us.usuarioID = u.usuarioID', 'left');
