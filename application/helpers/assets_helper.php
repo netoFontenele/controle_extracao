@@ -149,7 +149,7 @@ if ( !function_exists('show_erros') ) {
             $CI->form_validation->set_error_delimiters('<div class="text-small">', '</div>');
             echo'<div data-alert class="alert-box alert radius ">
                 <a href="#" class="close">&times;</a>
-                <strong><i class="icon-remove"></i> Ai caramba! algo deu errado.</strong> <br />
+                <strong><i class="icon-remove"></i> Ai caramba! algo deu errado.</strong> <br /><br />
                 ' .
                validation_errors() . '
                 </div>';
