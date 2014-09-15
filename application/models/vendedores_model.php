@@ -17,10 +17,14 @@ class Vendedores_model extends CI_Model {
             $sql_vendedor_ambulante['PessoaFisicaID'] = $this->db->insert_id();
             
             $this->db->insert('vendedor_ambulante',$sql_vendedor_ambulante);
-            
+/*SELECT *
+FROM `vendedor_ambulante` AS va
+INNER JOIN pessoa_fisica AS pf ON va.PessoaFisicaID = pf.PessoaFisicaID
+where pf.CPF= '886.537.111'*/
+
             $sql_referencias['VendedorAmbulanteID'] = $this->db->insert_id();
-            
-            $this->db->insert_batch('referencias_pessoais', $sql_referencias); 
+            $a =  $this->db->insert_id();
+            $this->db->insert('referencias_pessoais',$sql_referencias);*/
             
         }
 }
