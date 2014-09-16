@@ -13,6 +13,7 @@ class Vendedores extends CI_Controller {
 
     public function index() {
         $data_header['titulo'] = 'Vendedores ';
+        $data_header['vendedores'] = $this->vendedores->get_vendedores();
         $data_header['cidades'] = $this->vendedores->get_cidades()->result();
         $this->layout->region('header', include_file('header'), $data_header);
         $this->layout->region('page_header', include_file('page_header'));
@@ -134,9 +135,6 @@ class Vendedores extends CI_Controller {
         $this->form_validation->set_rules($regras);
         if ($this->form_validation->run()) {
             extract($this->input->post());
-            echo '<pre>';
-            var_dump($this->input->post());
-            echo '</pre>';
             //dados de endereço
             $sql_endereco = array(
                 'endereco' => $endereco,
@@ -161,26 +159,27 @@ class Vendedores extends CI_Controller {
             //Dados do ambulante
             $sql_vendedor_ambulante = array(
                 'RegionalID' => $this->session->userdata('regionalID'),
-                'timestamp' => time(),
+                'data' => date('Y-m-d'),
             );
             $sql_referencias = array(
                array(
                     'nome' => $referencia1,
                     'parentesco' => $parentesco1,
-                    'contato' => $contato1,
-                    'VendedorAmbulanteID' => ''
+                    'contato' => $contato1
                     ),
                 array(
                     'nome' => $referencia2,
                     'parentesco' => $parentesco2,
-                    'contato' => $contato2,
-                    'VendedorAmbulanteID' => ''
+                    'contato' => $contato2
                     )
                 );
-            echo '<pre>';
-            echo var_dump($sql_referencias);
-            echo '</pre>';
-            $this->vendedores->insert($sql_endereco,$sql_pessoa_fisica,$sql_vendedor_ambulante,$sql_referencias);
+            if($this->vendedores->insert($sql_endereco,$sql_pessoa_fisica,$sql_vendedor_ambulante,$sql_referencias)){
+                create_flashdata('cad_vendedor',"$nome foi cadastrado com sucesso",'sucesso');
+                redirect(base_url('dashboard/vendedores'));
+            }else{
+                create_flashdata('cad_vendedor','Falha ao cadastrar vendedor, por favor tente novamente','error'); 
+                redirect(base_url('dashboard/vendedores'));
+            }
         } else {
             $this->index();
         }
@@ -233,7 +232,10 @@ class Vendedores extends CI_Controller {
             return true;
         }
     }
-
+    public function visualizar($id)
+    {
+       echo "oiee";
+    }
 }
 
 /* End of file vendedores.php */
