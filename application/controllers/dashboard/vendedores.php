@@ -12,8 +12,17 @@ class Vendedores extends CI_Controller {
     }
 
     public function index() {
+        $this->load->library('pagination');
+        $maximo = 10;
+        $inicio = (!$this->uri->segment(3)) ? 0 : $this->uri->segment(3);
+        $config['base_url'] = base_url('dashboard/vendedores/');
+        $config['total_rows'] = $this->vendedores->conta_registros();
+        $config['per_page'] = $maximo;
+        $this->pagination->initialize($config);
+        
+        $data_header['paginacao'] = $this->pagination->create_links();
         $data_header['titulo'] = 'Vendedores ';
-        $data_header['vendedores'] = $this->vendedores->get_vendedores();
+        $data_header['vendedores'] = $this->vendedores->get_vendedores($maximo, $inicio);
         $data_header['cidades'] = $this->vendedores->get_cidades()->result();
         $this->layout->region('header', include_file('header'), $data_header);
         $this->layout->region('page_header', include_file('page_header'));
@@ -51,7 +60,7 @@ class Vendedores extends CI_Controller {
             array(
                 'field' => 'nascimento',
                 'label' => 'Data de nascimento',
-                'rules' => 'required'
+                'rules' => 'required|callback_validar_data'
             ),
             //telefone
             array(
@@ -231,6 +240,16 @@ class Vendedores extends CI_Controller {
 
             return true;
         }
+    }
+    public function validar_data($data)
+    {
+        if (validaDataBR($data)) {
+            return true;
+        } else {
+            $this->form_validation->set_message('validar_data', 'Esta %s não é válida');
+            return false;
+        }
+
     }
     public function visualizar($id)
     {

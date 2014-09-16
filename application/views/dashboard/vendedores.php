@@ -79,7 +79,6 @@
 		'placeholder' => 'Data de Nascimento' ,
 		'data-mask' => '00/00/0000',
 		'value' => set_value('nascimento'),
-		'pattern' => '^([1-9]|0[1-9]|[1,2][0-9]|3[0,1])/([1-9]|1[0,1,2])/\d{4}$',
 		'required' => true
 		);
 		echo form_input($attributes); ?>
@@ -326,6 +325,7 @@
 			<?php endforeach ?>
 			</tbody>
 		</table>
+		<?php echo $paginacao?>
 	</div>
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyADNrhQpCRDfXpkhXabTP4f3FPRgLaRBTY&amp;sensor=false"></script>
 <?php echo load_js('js_vendedor.js') ?>

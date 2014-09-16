@@ -36,7 +36,7 @@ class Vendedores_model extends CI_Model {
 
             return ($this->db->affected_rows() >= 1)? true : false;
     }
-    public function get_vendedores()
+    public function get_vendedores($limite = NULL,$offset = NULL)
     {
         /*
         
@@ -49,7 +49,8 @@ class Vendedores_model extends CI_Model {
         INNER JOIN cidade cd ON cd.cidadeID = en.cidadeID
         INNER JOIN regional r ON r.regionalID = va.regionalID
          */
-        
+        $this->db->order_by('pf.nome', 'ASC');
+        $this->db->limit($limite,$offset);
         $this->db->select('pf.nome,pf.sexo,pf.cpf,pf.rg,pf.datanascimento as nascimento,en.endereco_google as localizacao_aproximada,
         pf.apelido,pf.telefone,en.endereco,en.numero,en.cep,en.bairro,en.latitude,en.longitude,
         cd.descricao as cidade,r.regional,va.VendedorAmbulanteID as cod_vendedor');
@@ -59,6 +60,10 @@ class Vendedores_model extends CI_Model {
         $this->db->join('cidade cd ', 'cd.cidadeID = en.cidadeID', 'inner');
         $this->db->join('regional r', 'r.regionalID = va.regionalID', 'inner');
         return $this->db->get();
+    }
+        function conta_registros()
+    {
+        return $this->db->count_all_results('pessoa_fisica');
     }
 }
 
