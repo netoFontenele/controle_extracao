@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Servidor: localhost
--- Tempo de Geração: Set 12, 2014 as 08:49 AM
+-- Tempo de Geração: Set 23, 2014 as 04:22 PM
 -- Versão do Servidor: 5.0.27
 -- Versão do PHP: 5.2.0
 -- 
@@ -51,7 +51,7 @@ CREATE TABLE `ci_sessions` (
 -- 
 
 INSERT INTO `ci_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activity`, `user_data`) VALUES 
-('783de21a43fb7ca17c1ad8dac2ee908f', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.103 Safari/537.36', 1410375735, 'a:9:{s:9:"user_data";s:0:"";s:7:"usuario";s:4:"Neto";s:9:"usuarioID";s:2:"11";s:6:"avatar";s:17:"netofontenele.jpg";s:10:"last_login";s:30:"05 de jun de 2014, as 10:57:19";s:5:"praca";N;s:8:"PerfilID";s:1:"2";s:8:"regional";s:8:"Cascavel";s:12:"is_logged_in";i:1;}');
+('e25a4b19b3f2ecc96b0393c503a65463', '127.0.0.1', 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.120 Safari/537.36', 1411497295, 'a:10:{s:9:"user_data";s:0:"";s:7:"usuario";s:4:"Neto";s:9:"usuarioID";s:2:"11";s:6:"avatar";s:17:"netofontenele.jpg";s:10:"last_login";s:30:"05 de jun de 2014, as 10:57:19";s:8:"PerfilID";s:1:"2";s:8:"regional";s:8:"Cascavel";s:10:"regionalID";s:1:"1";s:12:"is_logged_in";i:1;s:22:"flash:old:cad_vendedor";s:346:"\n               <div data-alert class="alert-box success">\n               <button type="button" class="close">×</button>\n               <strong><i class="icon-ok"></i> Legal! Tudo ocorreu como o esperado.</strong> <br />\n               <a href="#" class="close">&times;</a>Emérito Fontenele Neto foi cadastrado com sucesso\n               </div>";}');
 
 -- --------------------------------------------------------
 
@@ -332,9 +332,11 @@ CREATE TABLE `endereco` (
   `endereco_google` varchar(180) NOT NULL,
   `latitude` varchar(120) NOT NULL,
   `longitude` varchar(120) NOT NULL,
+  `PessoaFisicaID` int(11) NOT NULL,
   PRIMARY KEY  (`EnderecoID`),
-  KEY `fk_Endereco_Cidade1_idx` (`CidadeID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='<double-click to overwrite multiple objects>' AUTO_INCREMENT=1 ;
+  KEY `fk_Endereco_Cidade1_idx` (`CidadeID`),
+  KEY `fk_endereco_pessoa_fisica1_idx` (`PessoaFisicaID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='<double-click to overwrite multiple objects>' AUTO_INCREMENT=5 ;
 
 -- 
 -- Extraindo dados da tabela `endereco`
@@ -438,15 +440,13 @@ CREATE TABLE `pessoa_fisica` (
   `PessoaFisicaID` int(11) NOT NULL auto_increment,
   `nome` varchar(50) NOT NULL,
   `sexo` char(1) NOT NULL,
-  `CPF` char(11) default NULL,
+  `CPF` varchar(16) default NULL,
   `RG` varchar(45) default NULL,
   `dataNascimento` date default NULL,
   `apelido` varchar(45) default NULL,
   `Telefone` varchar(45) default NULL,
-  `EnderecoID` int(11) NOT NULL,
-  PRIMARY KEY  (`PessoaFisicaID`),
-  KEY `fk_Pessoa_Fisica_Endereco1_idx` (`EnderecoID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='<double-click to overwrite multiple objects>' AUTO_INCREMENT=1 ;
+  PRIMARY KEY  (`PessoaFisicaID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='<double-click to overwrite multiple objects>' AUTO_INCREMENT=14 ;
 
 -- 
 -- Extraindo dados da tabela `pessoa_fisica`
@@ -509,11 +509,10 @@ CREATE TABLE `referencias_pessoais` (
   `nome` varchar(65) NOT NULL,
   `parentesco` varchar(45) NOT NULL,
   `contato` varchar(12) NOT NULL,
-  `VendedorAmbulanteID` int(5) unsigned NOT NULL,
+  `VendedorAmbulanteID` int(11) NOT NULL,
   PRIMARY KEY  (`referencias_pessoaisID`),
-  KEY `vendedor_ambulanteID` (`VendedorAmbulanteID`),
-  KEY `id_vendedor_ambulante` (`VendedorAmbulanteID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  KEY `fk_referencias_pessoais_vendedor_ambulante1_idx` (`VendedorAmbulanteID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
 
 -- 
 -- Extraindo dados da tabela `referencias_pessoais`
@@ -647,7 +646,7 @@ CREATE TABLE `vendedor_ambulante` (
   PRIMARY KEY  (`VendedorAmbulanteID`),
   KEY `fk_VendedorAmbulante_Regional1_idx` (`RegionalID`),
   KEY `fk_VendedorAmbulante_PessoaFisica1_idx` (`PessoaFisicaID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 -- 
 -- Extraindo dados da tabela `vendedor_ambulante`
@@ -683,19 +682,14 @@ ALTER TABLE `distribuicao_vendedor`
 -- Restrições para a tabela `endereco`
 -- 
 ALTER TABLE `endereco`
-  ADD CONSTRAINT `fk_Endereco_Cidade1` FOREIGN KEY (`CidadeID`) REFERENCES `cidade` (`CidadeID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_Endereco_Cidade1` FOREIGN KEY (`CidadeID`) REFERENCES `cidade` (`CidadeID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_endereco_pessoa_fisica1` FOREIGN KEY (`PessoaFisicaID`) REFERENCES `pessoa_fisica` (`PessoaFisicaID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- 
 -- Restrições para a tabela `logs`
 -- 
 ALTER TABLE `logs`
   ADD CONSTRAINT `fk_logs_Usuario1` FOREIGN KEY (`usuarioID`) REFERENCES `usuario` (`usuarioID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- 
--- Restrições para a tabela `pessoa_fisica`
--- 
-ALTER TABLE `pessoa_fisica`
-  ADD CONSTRAINT `fk_Pessoa_Fisica_Endereco1` FOREIGN KEY (`EnderecoID`) REFERENCES `endereco` (`EnderecoID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- 
 -- Restrições para a tabela `pessoa_juridica`
@@ -709,6 +703,12 @@ ALTER TABLE `pessoa_juridica`
 ALTER TABLE `ponto_fixo`
   ADD CONSTRAINT `fk_PontoFixo_PessoaJuridica1` FOREIGN KEY (`PessoaJuridicaID`) REFERENCES `pessoa_juridica` (`PessoaJuridicaID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_PontoFixo_Regional1` FOREIGN KEY (`RegionalID`) REFERENCES `regional` (`regionalID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- 
+-- Restrições para a tabela `referencias_pessoais`
+-- 
+ALTER TABLE `referencias_pessoais`
+  ADD CONSTRAINT `referencias_pessoais_ibfk_1` FOREIGN KEY (`VendedorAmbulanteID`) REFERENCES `vendedor_ambulante` (`VendedorAmbulanteID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- 
 -- Restrições para a tabela `rota_arrecadador`
@@ -734,5 +734,5 @@ ALTER TABLE `usuario_regional`
 -- Restrições para a tabela `vendedor_ambulante`
 -- 
 ALTER TABLE `vendedor_ambulante`
-  ADD CONSTRAINT `fk_VendedorAmbulante_PessoaFisica1` FOREIGN KEY (`PessoaFisicaID`) REFERENCES `pessoa_fisica` (`PessoaFisicaID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_VendedorAmbulante_Regional1` FOREIGN KEY (`RegionalID`) REFERENCES `regional` (`regionalID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_VendedorAmbulante_Regional1` FOREIGN KEY (`RegionalID`) REFERENCES `regional` (`regionalID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `vendedor_ambulante_ibfk_1` FOREIGN KEY (`PessoaFisicaID`) REFERENCES `pessoa_fisica` (`PessoaFisicaID`) ON DELETE CASCADE ON UPDATE CASCADE;
