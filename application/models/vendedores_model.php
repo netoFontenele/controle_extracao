@@ -18,7 +18,6 @@ class Vendedores_model extends CI_Model {
 
         $pessoa_fisica_id = $this->pessoa_fisica_CPF($sql_pessoa_fisica['CPF'])->PessoaFisicaID;
 
-         echo $pessoa_fisica_id;
         //------------------------------------------------------------------------------
         //Endereço
         $sql_endereco['PessoaFisicaID'] = $pessoa_fisica_id;
@@ -50,36 +49,34 @@ class Vendedores_model extends CI_Model {
 
         return ($this->db->affected_rows() >= 1)? true : false;
     }
-    public function get_vendedores($limite = NULL,$offset = NULL)
+    public function get_vendedores($limite = NULL,$offset = NULL,$where = NULL)
     {
-        /*
-        
-        SELECT pf.nome,pf.sexo,pf.cpf,pf.rg,pf.datanascimento as nascimento,
-        pf.apelido,pf.telefone,en.endereco,en.numero,en.cep,en.bairro,en.endereco_google as localizacao_aproximada,en.latitude,en.longitude,
-        cd.descricao as cidade,r.regional
-        FROM `pessoa_fisica` AS pf
-        INNER JOIN vendedor_ambulante va ON pf.PessoaFisicaID = va.PessoaFisicaID
-        INNER JOIN endereco en ON pf.EnderecoID = en.EnderecoID
-        INNER JOIN cidade cd ON cd.cidadeID = en.cidadeID
-        INNER JOIN regional r ON r.regionalID = va.regionalID
-         */
         $this->db->order_by('pf.nome', 'ASC');
         $this->db->limit($limite,$offset);
         $this->db->select('pf.nome,pf.sexo,pf.cpf,pf.rg,pf.datanascimento as nascimento,en.endereco_google as localizacao_aproximada,
             pf.apelido,pf.telefone,en.endereco,en.numero,en.cep,en.bairro,en.latitude,en.longitude,
-            cd.descricao as cidade,r.regional,va.VendedorAmbulanteID as cod_vendedor');
+            cd.descricao as cidade,r.regional,va.VendedorAmbulanteID as cod_vendedor,va.data,en.referencia');
         $this->db->from('pessoa_fisica as pf');
         $this->db->join('vendedor_ambulante va', 'pf.PessoaFisicaID = va.PessoaFisicaID', 'inner');
         $this->db->join('endereco en', 'pf.PessoaFisicaID = en.PessoaFisicaID', 'inner');
         $this->db->join('cidade cd ', 'cd.cidadeID = en.cidadeID', 'inner');
         $this->db->join('regional r', 'r.regionalID = va.regionalID', 'inner');
+        if (!is_null($where)) {
+            $this->db->where($where);
+        }
+        return $this->db->get();
+    }
+    public function get_referencias($vendodor_ambulante_id)
+    {
+        $this->db->where('VendedorAmbulanteID', $vendodor_ambulante_id);
+        $this->db->select('*');
+        $this->db->from('referencias_pessoais');
         return $this->db->get();
     }
     function conta_registros()
     {
         return $this->db->count_all_results('pessoa_fisica');
     }
-
 }
 
 /* End of file vendedores_model.php */

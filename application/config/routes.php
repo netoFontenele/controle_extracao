@@ -40,6 +40,7 @@
 $route['dashboard'] = "dashboard/dashboard/index";
 $route['dashboard/extracao/(:num)'] = "dashboard/extracao/index/$1";
 $route['dashboard/vendedores/(:num)'] = "dashboard/vendedores/index/$1";
+//$route['vendedores/ver'] = "dashboard/vendedores/visualizar/$1";
 $route['default_controller'] = "login";
 $route['404_override'] = '';
 

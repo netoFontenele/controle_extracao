@@ -74,6 +74,11 @@ class Vendedores extends CI_Controller {
                 'label' => 'Endereco',
                 'rules' => 'required'
             ),
+            array(
+                'field' => 'referencia',
+                'label' => 'referência',
+                'rules' => 'required'
+            ),
             //numero
             array(
                 'field' => 'numero',
@@ -147,6 +152,7 @@ class Vendedores extends CI_Controller {
             //dados de endereço
             $sql_endereco = array(
                 'endereco' => $endereco,
+                'referencia' => $referencia,
                 'numero' => $numero,
                 'cidadeid' => $cidade,
                 'cep' => $cep,
@@ -253,7 +259,14 @@ class Vendedores extends CI_Controller {
     }
     public function visualizar($id)
     {
-       echo "oiee";
+        $data_header['titulo'] = 'Ficha de Vendedor ';
+        $data_header['vendedor'] = $this->vendedores->get_vendedores(1,0,array('va.VendedorAmbulanteID' => $id))->row();
+        $data_header['referencias'] =$this->vendedores->get_referencias($id)->result();
+        $data_header['a'] = $this->db->last_query();
+        $this->layout->region('header', include_file('header'), $data_header);
+        $this->layout->region('page_header', include_file('page_header'));
+        $this->layout->region('footer', include_file('footer'));
+        $this->layout->show('dashboard/vendedores_ficha');
     }
 }
 

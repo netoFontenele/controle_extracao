@@ -101,7 +101,7 @@
 </div>
 <h3>Dados de Endereço</h3>
 <div class="row">
-	<div class="large-10 columns">
+	<div class="large-6 columns">
 		<label>Rua<small class="right" data-tooltip aria-haspopup="true" class="has-tip" title="Inserir no Formato Rua: ou AV.">Requerido</small>
 			<?php $attributes = array(
 				'name' => 'endereco' ,
@@ -120,6 +120,18 @@
 		'placeholder' => 'Nº' ,
 		'value' => set_value('numero'),
 		'pattern' => 'number',
+		'required' => true
+		);
+		echo form_input($attributes); ?>
+	</label>
+	<small class="error">Valor inserido inválido ou incorreto</small>
+</div>
+		<div class="large-4 columns">
+			<label>Referencia <small class="right" data-tooltip aria-haspopup="true" class="has-tip" title="Por favor inserir um ponto de referência">Requerido</small>
+	<?php $attributes = array(
+		'name' => 'referencia' ,
+		'placeholder' => 'Ponto de Referência' ,
+		'value' => set_value('referencia'),
 		'required' => true
 		);
 		echo form_input($attributes); ?>
@@ -212,11 +224,13 @@
 			</div>
 			<div class="large-3 columns">
 				<label>Parentesco:
-					<select name="parentesco1">
+					<select name="parentesco1" required>
 						<option value="">Escolha o parentesco</option>
 						<option value="pai">Pai</option>
 						<option value="mae">mãe</option>
 						<option value="esposa">Esposa</option>
+						<option value="sogro">sogro</option>
+						<option value="sogra">sogra</option>
 						<option value="Esposo">Esposo</option>
 						<option value="Primo">Primo</option>
 						<option value="prima">Prima</option>
@@ -228,6 +242,7 @@
 						<option value="amigo">amigo</option>
 					</select>
 				</label>
+				<small class="error">Valor selecionado inválido ou incorreto</small>
 			</div>
 			<div class="large-4 columns">
 				<label>Contato: <small class="right" data-tooltip aria-haspopup="true" class="has-tip" title="Por favor inserir apenas números, o nosso sistema cuidará de inserir o resto ;)">Apenas Números / Requerido</small>
@@ -259,11 +274,13 @@
 		</div>
 		<div class="large-3 columns">
 			<label>Parentesco:
-				<select name="parentesco2">
+				<select name="parentesco2" required>
 					<option value="">Escolha o parentesco</option>
 					<option value="pai">Pai</option>
 					<option value="mae">mãe</option>
 					<option value="esposa">Esposa</option>
+					<option value="sogro">sogro</option>
+					<option value="sogra">sogra</option>
 					<option value="Esposo">Esposo</option>
 					<option value="Primo">Primo</option>
 					<option value="prima">Prima</option>
@@ -275,7 +292,7 @@
 					<option value="amigo">amigo</option>
 				</select>
 			</label>
-			<small class="error">Valor inserido inválido ou incorreto</small>
+			<small class="error">Valor selecionado inválido ou incorreto</small>
 		</div>
 		<div class="large-4 columns">
 			<label>Contato: <small class="right" data-tooltip aria-haspopup="true" class="has-tip" title="Por favor inserir apenas números, o nosso sistema cuidará de inserir o resto ;)">Apenas Números / Requerido</small>
@@ -318,7 +335,7 @@
 					<td><?php echo $vendedor->telefone ?></td>
 					<td><?php echo $vendedor->endereco ?>, nº <?php echo $vendedor->numero ?> </td>
 					<td><?php echo $vendedor->bairro ?></td>
-					<td><?php echo anchor(base_url("dashboard/vendedores/visualizar/id/$vendedor->cod_vendedor"), '<span class="text-center" data-tooltip aria-haspopup="true" class="has-tip tip-top" title="Visualizar ficha completa"><i class="fa fa-file-text"> ficha </span></i>') ?></td>
+					<td><?php echo anchor(base_url("dashboard/vendedores/visualizar/$vendedor->cod_vendedor"), '<span class="text-center" data-tooltip aria-haspopup="true" class="has-tip tip-top" title="Visualizar ficha completa"><i class="fa fa-file-text"> ficha </span></i>') ?></td>
 					<td><center><i class="fa fa-pencil-square-o"></i></center></td>
 					<td><center><i class="fa fa-trash-o"></i></center></td>
 				</tr>
