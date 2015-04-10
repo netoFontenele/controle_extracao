@@ -407,7 +407,7 @@ INSERT INTO `parametros` (`parametrosID`, `parametro_nome`, `parametro_descricao
 (1, 'comissao_vendedor', 'Valor dado ao vendedor por cada selo vendido', '0.80', 1),
 (2, 'comissao_ponto_fixo_rota', 'Valor pago ao ponto fixo por cada selo vendido', '0.50', 1),
 (3, 'mail_user', 'E-mail usado como remetente', 'netofontenelenf@gmail.com', 1),
-(5, 'mail_pass', 'Senha do e-mail usado como remetente', 'nadaadeclara', 1),
+(5, 'mail_pass', 'Senha do e-mail usado como remetente', 'na', 1),
 (6, 'dia_sorteio', '0 = domingo\r\n6 = sábado', '0', 1);
 
 -- --------------------------------------------------------
